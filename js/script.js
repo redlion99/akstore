@@ -18,7 +18,14 @@
   });
 
   if ($.fancybox){
-    $('.fancybox').fancybox();
+    $('.fancybox').fancybox({
+        'autoPlay'      :   true,
+        'transitionIn'  :   'elastic',
+        'transitionOut' :   'elastic',
+        'speedIn'       :   600, 
+        'speedOut'      :   200, 
+        'overlayShow'   :   false
+    });
   }
 
   //Remove search input icon
@@ -53,6 +60,7 @@
 
   setTimeout(startWindowAnim, 1);
   setTimeout(setScrollLoading, 500);
+  setTimeout(function(){$('.article-gallery-img.fancybox').click()},1000);
 
   // Share
   $('body').on('click', function(){

@@ -3,17 +3,24 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives | AKStore</title>
+  <title>领域模型 | AKStore</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="AKStore">
-<meta property="og:url" content="http://redlion99.github.io/akstore/akstore/archives/">
+  <meta name="description" content="本系统包含四个主要的Bounded Context(边界上下文) , 分别是用户上下文，账务上下文，库存上下文和商城上下文。
+用户上下文是一个小型CRM的基础并且管理用户权限。账务上下文和库存上下文作为商城上下文的支撑，同时可以为其他系统提供服务。
+除了账务上下文用InnoDB之外，其他上下文都采用MongoDB存储数据。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="领域模型">
+<meta property="og:url" content="http://redlion99.github.io/akstore/akstore/2015/02/09/domain-model/">
 <meta property="og:site_name" content="AKStore">
-<meta property="og:description">
+<meta property="og:description" content="本系统包含四个主要的Bounded Context(边界上下文) , 分别是用户上下文，账务上下文，库存上下文和商城上下文。
+用户上下文是一个小型CRM的基础并且管理用户权限。账务上下文和库存上下文作为商城上下文的支撑，同时可以为其他系统提供服务。
+除了账务上下文用InnoDB之外，其他上下文都采用MongoDB存储数据。">
+<meta property="og:image" content="/akstore/design/domain_model.png">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AKStore">
-<meta name="twitter:description">
+<meta name="twitter:title" content="领域模型">
+<meta name="twitter:description" content="本系统包含四个主要的Bounded Context(边界上下文) , 分别是用户上下文，账务上下文，库存上下文和商城上下文。
+用户上下文是一个小型CRM的基础并且管理用户权限。账务上下文和库存上下文作为商城上下文的支撑，同时可以为其他系统提供服务。
+除了账务上下文用InnoDB之外，其他上下文都采用MongoDB存储数据。">
 
   
   
@@ -133,9 +140,7 @@
   
 </aside>
         
-        <section id="main">
-  
-    <article id="post-domain-model" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-domain-model" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/akstore/2015/02/09/domain-model/" class="article-date">
   <time datetime="2015-02-09T08:15:32.000Z" itemprop="datePublished">Feb 9 2015</time>
@@ -148,8 +153,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/akstore/2015/02/09/domain-model/">领域模型</a>
+    <h1 class="article-title" itemprop="name">
+      领域模型
     </h1>
   
 
@@ -171,58 +176,20 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-publish" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/akstore/2015/02/06/publish/" class="article-date">
-  <time datetime="2015-02-06T07:24:45.000Z" itemprop="datePublished">Feb 6 2015</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/akstore/2015/02/06/publish/">AKStore项目介绍</a>
-    </h1>
+    <a href="/akstore/2015/02/06/publish/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">AKStore项目介绍</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>AKStore是我从2014年开始一直开发并维护的一个面向领域驱动的基于Mongodb和Spring-data的开源商城框架，通过使用这个框架，开发者可以快速地开发出面向领域驱动的、专业的多商户商城应用。<br>整个商城以RESTful服务的形式对外提供从用户，商户，商品到订单等领域服务。</p>
-<ul>
-<li>支持多账户，多商户多门店，账务系统生成详细的账单为对账提供便利</li>
-<li>支持多商户订单自动分割</li>
-<li>最多三级的商品分类，支持商品自定义属性</li>
-<li>多种用户角色和管理功能</li>
-<li>支持自定义促销规则和广告管理</li>
-<li>Spring框架下提供丰富的领域事件，模块藕合度低，易于扩展</li>
-<li>提供RESTful服务，和界面逻辑严格分离，易于二次开发</li>
-</ul>
-<p>具体使用请参考 <a href="/akstore/api/">文档</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://redlion99.github.io/akstore/2015/02/06/publish/" data-id="rcmh9wq3r0vzo7ys" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
 
-
-  
-  
 </section>
       </div>
       <footer id="footer">

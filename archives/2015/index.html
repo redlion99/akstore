@@ -38,7 +38,7 @@
       <nav id="main-nav">
         <a id="main-nav-toggle" class="nav-icon"></a>
         
-          <a class="main-nav-link" href="/akstore/akstore">主页</a>
+          <a class="main-nav-link" href="/akstore/">主页</a>
         
           <a class="main-nav-link" href="https://github.com/redlion99/akstore">下载</a>
         
@@ -46,7 +46,7 @@
         
           <a class="main-nav-link" href="/akstore/api">文档</a>
         
-          <a class="main-nav-link" href="/akstore/">关于我</a>
+          <a class="main-nav-link" href="http://redlion99.github.io">关于我</a>
         
       </nav>
       <nav id="sub-nav">
@@ -64,7 +64,7 @@
 </header>
       <nav id="mobile-nav" class="off">
   
-    <a href="/akstore/akstore" class="mobile-nav-link">主页</a>
+    <a href="/akstore/" class="mobile-nav-link">主页</a>
   
     <a href="https://github.com/redlion99/akstore" class="mobile-nav-link">下载</a>
   
@@ -72,7 +72,7 @@
   
     <a href="/akstore/api" class="mobile-nav-link">文档</a>
   
-    <a href="/akstore/" class="mobile-nav-link">关于我</a>
+    <a href="http://redlion99.github.io" class="mobile-nav-link">关于我</a>
   
   <div id="search-form-wrap-mobile">
     <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://redlion99.github.io/akstore"></form>
@@ -88,7 +88,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/akstore/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/akstore/archives/2015/02/">February 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -98,6 +98,10 @@
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/akstore/2015/02/09/domain-model/">领域模型</a>
+          </li>
         
           <li>
             <a href="/akstore/2015/02/06/publish/">AKStore项目介绍</a>
@@ -130,6 +134,46 @@
 </aside>
         
         <section id="main">
+  
+    <article id="post-domain-model" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/akstore/2015/02/09/domain-model/" class="article-date">
+  <time datetime="2015-02-09T08:15:32.000Z" itemprop="datePublished">Feb 9 2015</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/akstore/2015/02/09/domain-model/">领域模型</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本系统包含四个主要的Bounded Context(边界上下文) , 分别是用户上下文，账务上下文，库存上下文和商城上下文。</p>
+<p>用户上下文是一个小型CRM的基础并且管理用户权限。账务上下文和库存上下文作为商城上下文的支撑，同时可以为其他系统提供服务。</p>
+<p>除了账务上下文用InnoDB之外，其他上下文都采用MongoDB存储数据。</p>
+<p><img src="/akstore/design/domain_model.png" alt="领域模型"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://redlion99.github.io/akstore/2015/02/09/domain-model/" data-id="cyah6bqfpe8j1rtw" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-publish" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
