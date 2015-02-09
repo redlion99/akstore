@@ -1,0 +1,92 @@
+<form class="dispatch_prd_create_from" action="" method="post">
+    <input name="_id" type="hidden">
+    <table>
+        <tr>
+            <td>商品名称:</td>
+            <td><input name="_name" class="easyui-textbox" data-options="required:true"></td>
+        </tr>
+        <tr>
+            <td>分类2:</td>
+            <td>
+                <select class="easyui-combobox" name="cat1_name">
+                    <option value="进口水果" selected>进口水果</option>
+                    <option value="国产水果" selected>国产水果</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>分类3:</td>
+            <td>
+                <select class="easyui-combobox" name="cat2_name">
+                    <option value="苹果" selected>苹果</option>
+                    <option value="猕猴桃" selected>猕猴桃</option>
+                    <option value="香蕉" selected>香蕉</option>
+                    <option value="火龙果" selected>火龙果</option>
+                    <option value="樱桃" selected>樱桃</option>
+                    <option value="提子" selected>提子</option>
+                    <option value="橙子" selected>橙子</option>
+                    <option value="梨" selected>梨</option>
+                    <option value="菠萝" selected>菠萝</option>
+                    <option value="橘子" selected>橘子</option>
+                    <option value="其他" selected>其他</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>产地:</td>
+            <td><input name="_origin" class="easyui-textbox" data-options="required:true"></td>
+        </tr>
+        <tr>
+            <td>价格:</td>
+            <td><input name="_unitPrice" class="easyui-textbox" data-options="required:true"></td>
+        </tr>
+        <tr>
+            <td>单个重量:（kg）</td>
+            <td><input name="_atomWeight" class="easyui-textbox" data-options="required:true">kg</td>
+        </tr>
+
+        <tr>
+            <td>库存:</td>
+            <td><input name="_stock" class="easyui-textbox" data-options="required:true"></td>
+        </tr>
+        <tr>
+            <td>描述:</td>
+            <td><input name="_description" class="easyui-textbox" data-options="multiline:true,required:true" style="height:160px"></td>
+        </tr>
+        <tr>
+            <td class="picture_upload" colspan="2"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="提交"></td>
+        </tr>
+    </table>
+</form>
+
+
+
+<script type="text/javascript">
+        $('form.dispatch_prd_create_from').form({
+            url:'/api/admin/dispatch/products',
+            onSubmit: function(){
+                var options=$(this).form('options');
+                var isValid = $(this).form('validate');
+                if (isValid){
+                    var params=$(this).serializeArray();
+                    $.spost(options.url,params,function(data){
+                        $.navigate('dispatch');
+                    });
+                }
+                return false;
+            },
+            onLoadSuccess:function(data){
+                $('.picture_display').html('<img src="'+data._pictureUrl+'">');
+            }
+        });
+
+
+
+
+    $('.picture_upload').bigwin('loadView','forms/picture_upload_and_display');
+
+</script>

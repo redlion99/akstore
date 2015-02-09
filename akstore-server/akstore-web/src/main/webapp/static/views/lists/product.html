@@ -1,0 +1,24 @@
+
+<table class="product_list" data-options="singleSelect:true,border:false,fit:true,fitColumns:true,scrollbarSize:0">  
+    <thead>  
+        <tr>  
+            <th data-options="field:'_name',width:80,formatter:formatItem"></th>  
+            <th data-options="field:'arrow',width:24,fixed:true,formatter:formatArrow"></th>  
+        </tr>
+    </thead>  
+</table>
+
+
+<script type="text/javascript">
+
+        
+function formatItem(value,row){
+    var s = '<img src="../images/'+value+'.png" style="width:32px;height:32px;border:0;margin-right:5px;float:left"/>';
+    s += '<div style="font-size:16px;font-weight:bold">'+value+'</div>';
+    s += '<div style="line-height:24px">'+row._price+'</div>';
+    return s;
+}
+function formatArrow(){
+    return '<span class="arrow">&nbsp;</span>';
+}
+</script>

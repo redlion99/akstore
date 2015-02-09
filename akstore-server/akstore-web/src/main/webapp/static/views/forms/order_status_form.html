@@ -1,0 +1,56 @@
+<form action="" method="post" class="order_status_form">
+    <table>
+        <tr>
+            <td>单号:</td>
+            <td ><input name="_id" type="text" class="easyui-textbox" data-options="editable:false"></td>
+        </tr>
+        <tr>
+            <td>地址:</td>
+            <td ><input name="shippingAddress_string" type="text" class="easyui-textbox" data-options="editable:false"></td>
+        </tr>
+        <tr>
+            <td>订单状态:</td>
+            <td>
+                <select class="easyui-combobox" name="_status">
+                    <option value="1">新订单</option>
+                    <option value="3">已取消</option>
+                    <option value="17">已支付</option>
+                    <option value="51">已退款</option>
+                    <option value="273">正在出库</option>
+                    <option value="785">已在送货</option>
+                    <option value="1809">已送达</option>
+                    <option value="1813">已完成</option>
+                    <option value="3857">已退货</option>
+                    <option value="3899">已关闭</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td><input type="submit" value="提交"></td>
+        </tr>
+    </table>
+</form>
+
+
+
+<script type="text/javascript">
+(function(){
+
+        $('form.order_status_form').form({
+            onSubmit: function(options){
+                var options=$(this).form('options');
+                var isValid = $(this).form('validate');
+                if (isValid){
+                    var params=$(this).serializeArray();
+                    $.spost(options.url,params,function(data){
+                        $.navigate('order');
+                    });
+                }
+                return false;
+            }
+        });
+
+})();
+</script>

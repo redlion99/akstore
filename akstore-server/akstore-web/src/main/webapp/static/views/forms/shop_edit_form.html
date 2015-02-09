@@ -1,0 +1,70 @@
+<form class="shop_edit_from" action="" method="post">
+    <input type="hidden" name="_id">
+    <table>
+        <tr>
+            <td>商户名称:</td>
+            <td><input name="partner_name" class="easyui-textbox" data-options="required:true"></td>
+        </tr>
+        <tr>
+            <td>门店名称:</td>
+            <td ><input name="_name" type="text" class="easyui-textbox" data-options="required:true"></td>
+        </tr>
+        <tr>
+            <td>联系电话:</td>
+            <td ><input name="contact_phone" type="text" class="easyui-textbox" data-options="required:true"></td>
+        </tr>
+        <tr>
+            <td>起送金额:</td>
+            <td ><input name="_minFare" type="text" class="easyui-textbox" data-options="required:true"></td>
+        </tr>
+        <tr>
+            <td>门店地址:</td>
+            <td class="address"></td>
+        </tr>
+        <tr>
+            <td>支付方式:</td>
+            <td><select name="partner_account_payment_accountType" class="easyui-combobox accountType" >
+                <option value="bank">银行卡</option>
+                <option value="cash">现金</option>
+                </select></td>
+        </tr>
+        <tr>
+            <td>账号:</td>
+            <td><input name="partner_account_payment_accountId" type="text" class="easyui-textbox" style="width:240px"></td>
+        </tr>
+        
+        <tr>
+            <td class="picture_upload" colspan="2"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="提交"></td>
+        </tr>
+    </table>
+</form>
+
+
+
+<script type="text/javascript">
+
+    $('.address').bigwin('loadView','forms/address');
+    $('form.shop_edit_from').form({
+        url:'/api/admin/shops',
+        onSubmit: function(){
+            var options=$(this).form('options');
+            var isValid = $(this).form('validate');
+            if (isValid){
+                var params=$(this).serializeArray();
+                console.log(params);
+                $.spost(options.url,params,function(data){
+                    console.log(data);
+                    $.navigate('partner');
+                });
+            }
+            return false;
+        }
+    });
+
+    $('.picture_upload').bigwin('loadView','forms/picture_upload_and_display');
+
+</script>

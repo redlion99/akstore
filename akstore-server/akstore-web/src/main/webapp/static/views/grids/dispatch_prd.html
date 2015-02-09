@@ -1,0 +1,36 @@
+<div class="dispatch_prd_search_form"></div>
+
+<table class="easyui-datagrid dispatch_prd_search_result" title="" style="width:100%,height:250px"
+       data-options="singleSelect:true,collapsible:true">
+    <thead>
+    <tr>
+        <th data-options="field:'_name',width:80">商品名称</th>
+        <th data-options="field:'_unitPrice',width:80,align:'right'">价格</th>
+        <th data-options="field:'_atomPrice',width:80,align:'right'">单个价格</th>
+        <th data-options="field:'_stock',width:80,align:'right'">库存</th>
+    </tr>
+    </thead>
+</table>
+
+
+<script type="text/javascript">
+    $('.dispatch_prd_search_form').bigwin('loadView','forms/dispatch_prd_search_form');
+    $('.dispatch_prd_search_result').datagrid({toolbar: [{
+        text:'修改',
+        iconCls: 'icon-edit',
+        handler: function(){
+            var selected=$('.dispatch_prd_search_result').datagrid('getSelected')._id;
+            $('.content .right').bigwin('loadView','forms/dispatch_prd_create_form',function(){
+                if(selected){
+                    $.sget('/api/admin/dispatch/products/'+selected,{},function(data){
+                        data=flatObject(data);
+                        console.log(data);
+                        $('form.dispatch_prd_create_from').form('load',data);
+                    });
+                }
+
+
+            });
+        }
+    },'-']});
+</script>

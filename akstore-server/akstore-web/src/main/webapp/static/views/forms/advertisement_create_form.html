@@ -1,0 +1,45 @@
+<form class="advertisement_create_from" action="" method="post">
+    <table>
+        <tr>
+            <td>门店ID:</td>
+            <td><input name="shop_id" class="f1 easyui-textbox" data-options="required:true"></td>
+        </tr>
+        <tr>
+            <td>商品ID:</td>
+            <td><input name="product_id" class="f1 easyui-textbox" data-options="required:true"></td>
+        </tr>
+        <tr>
+            <td class="picture_upload" colspan="2"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="提交"></td>
+        </tr>
+    </table>
+</form>
+
+
+
+<script type="text/javascript">
+
+(function(){
+
+    $('.picture_upload').bigwin('loadView','forms/picture_upload_and_display');
+
+    $('form.advertisement_create_from').form({
+        url:'/api/admin/advertisement',
+        onSubmit: function(){
+            var options=$(this).form('options');
+            var isValid = $(this).form('validate');
+            if (isValid){
+                var params=$(this).serializeArray();
+                $.spost(options.url,params,function(data){
+                    $.navigate('advertisement');
+                });
+            }
+            return false;
+        }
+    });
+
+})();
+</script>

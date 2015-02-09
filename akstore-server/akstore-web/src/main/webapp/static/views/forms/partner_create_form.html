@@ -1,0 +1,50 @@
+<form class="partner_create_from" action="" method="post">
+    <table>
+        <tr>
+            <td>商户名称:</td>
+            <td><input name="partner_name" class="f1 easyui-textbox" data-options="required:true"></td>
+        </tr>
+        <tr>
+            <td>手机号:</td>
+            <td><input name="partner_mobile" class="f1 easyui-textbox" data-options="required:true,validType:'minLength[11]'"></td>
+        </tr>
+        <tr>
+            <td>初始密码:</td>
+            <td><input name="partner_password" type="password" class="f1 easyui-textbox" data-options="required:true,validType:'minLength[6]'"></td>
+        </tr>
+        <tr>
+            <td>门店名称:</td>
+            <td ><input name="_name" class="f1 easyui-textbox" data-options="required:true"></td>
+        </tr>
+        <tr>
+            <td>门店地址:</td>
+            <td class="address"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="提交"></td>
+        </tr>
+    </table>
+</form>
+
+
+
+<script type="text/javascript">
+
+    $('.address').bigwin('loadView','forms/address');
+    $('form.partner_create_from').form({
+        url:'/api/admin/partners',
+        onSubmit: function(){
+            var options=$(this).form('options');
+            var isValid = $(this).form('validate');
+            if (isValid){
+                var params=$(this).serializeArray();
+                $.spost(options.url,params,function(data){
+                    $.navigate('partner');
+                });
+            }
+            return false;
+        }
+    });
+
+</script>

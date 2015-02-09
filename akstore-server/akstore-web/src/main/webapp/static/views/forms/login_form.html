@@ -1,0 +1,44 @@
+<form class="login_form" action="/api/users/login" method="post">
+    
+    <table>
+        <tr>
+            <td>用户名:</td>
+            <td><input name="username" class="easyui-textbox" value="system" data-options="required:true"></td>
+        </tr>
+        <tr>
+            <td>密码:</td>
+            <td><input name="password" type="password" value="" class="easyui-textbox" data-options="required:true"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="提交"></td>
+        </tr>
+    </table>
+</form>
+
+
+
+<script type="text/javascript">
+    $('form.login_form').form({
+        url:'/api/users/login',
+        onSubmit: function(){
+            var options=$(this).form('options');
+            var isValid = $(this).form('validate');
+            if (isValid){
+                var params=$(this).serializeArray();
+                $.post(options.url,params,function(data){
+                    console.log(data);
+                    if(data.staff){
+                        document.location.href="staff.html?t="+data.token+'&u='+data.staff.user.username+'&pa='+data.primaryPartner.id;
+                    }else if(data.partnerStaff){
+                        document.location.href="partner.html?t="+data.token+'&u='+data.partnerStaff.user.username+'&pa='+data.partnerStaff.partner.id;
+                    }else if(data.customer){
+                        document.location.href="customer.html?t="+data.token+'&u='+data.customer.user.username+'&cu='+data.customer.id;
+                    }
+                });
+            }
+            return false;
+        }
+    });
+
+</script>

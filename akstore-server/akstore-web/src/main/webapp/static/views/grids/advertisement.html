@@ -1,0 +1,36 @@
+
+<table class="easyui-datagrid adv_search_result" title="" style="width:100%,height:250px"
+       data-options="singleSelect:true,collapsible:true">
+    <thead>
+    <tr>
+        <th data-options="field:'shop_name',width:200">商户名称</th>
+        <th data-options="field:'product_name',width:80,align:'right'">商品名称</th>
+    </tr>
+    </thead>
+</table>
+
+
+<script type="text/javascript">
+
+(function(){
+    $('.adv_search_result').datagrid({toolbar: [{
+        text:'删除',
+        iconCls: 'icon-delete',
+        handler: function(){
+            var selected=$('.adv_search_result').datagrid('getSelected')._id;
+            $.sdelete('/api/admin/advertisements/'+selected,{},function(data){
+                flatArray(data.content);
+                $('.adv_search_result').datagrid('loadData',data.content);
+            });
+        }
+    },'-']});
+
+    $.sget('/api/advertisements',{},function(data){
+        flatArray(data.content);
+        $('.adv_search_result').datagrid('loadData',data.content);
+    });
+
+})();
+
+
+</script>

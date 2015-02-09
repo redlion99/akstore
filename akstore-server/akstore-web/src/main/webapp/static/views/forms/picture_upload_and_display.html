@@ -1,0 +1,20 @@
+<div><a href="#" class="easyui-linkbutton btnUpload">上传图片</a><input class="picture_id" name="picture_id" type="hidden"><div class="picture_display"></div>
+</div>
+  
+
+
+
+<script type="text/javascript">
+(function(){
+
+
+    $('.btnUpload').click(function(){
+        var self=$(this);
+        uploadAttachment('/api/attachments',function(data){
+            $('.picture_display',self.parent()).html('<img src="'+data.path+'">');
+            console.log(data);
+            $('.picture_id',self.parent()).val(data.id);
+        })
+    });
+})();
+</script>

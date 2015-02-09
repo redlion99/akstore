@@ -1,0 +1,20 @@
+<div class="purchase_search_form"></div>
+
+<table class="easyui-datagrid purchase_search_result" title="" style="width:100%,height:250px"
+       data-options="singleSelect:true,collapsible:true">
+    <thead>
+    <tr>
+        <th data-options="field:'_id',width:80">编号</th>
+        <th data-options="field:'_total',width:80,align:'right'">金额</th>
+    </tr>
+    </thead>
+</table>
+
+
+<script type="text/javascript">
+(function(){
+
+    $('.purchase_search_form').bigwin('loadView','forms/purchase_search_form');
+
+})();
+</script>

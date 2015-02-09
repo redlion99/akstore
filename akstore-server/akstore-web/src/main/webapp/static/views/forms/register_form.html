@@ -1,0 +1,46 @@
+<form method="post" action="/api/customers" class="register_form">
+    <table>
+        <tr>
+            <td>手机号:</td>
+            <td><input name="username" class="easyui-textbox"  data-options="required:true"></td>
+        </tr>
+        <tr>
+            <td>密码:</td>
+            <td><input name="password" type="password" class="easyui-textbox" data-options="required:true"></td>
+        </tr>
+        <tr>
+            <td>验证码:</td>
+            <td><input name="code" type="text" class="easyui-textbox" data-options="required:true"> <button>发送验证码</button></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="提交"></td>
+        </tr>
+    </table>
+
+</form>
+
+
+<script type="text/javascript">
+(function($){
+    $('form.register_form').form({
+        url:'/api/customers',
+        onSubmit:function(data){
+        	var options=$(this).form('options');
+            var isValid = $(this).form('validate');
+            if (isValid){
+                var params=$(this).serializeArray();
+                params.mobile=params.username;
+                $.post('/api/customers',params,function(data){
+                	if(data.customer){
+                        document.location.href="customer.html?t="+data.token+'&u='+data.customer.user.username+'&cu='+data.customer.id;
+                    }
+                });
+            }
+            return false;
+        }
+     });
+
+})(jQuery)
+        
+</script>

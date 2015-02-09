@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>商户管理平台</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <link rel="stylesheet" type="text/css" href="style/easyui.css">
+    <link rel="stylesheet" type="text/css" href="style/icon.css">
+    <link rel="stylesheet" type="text/css" href="style/color.css">
+    <link rel="stylesheet" type="text/css" href="style/main.css">
+    <script type="text/javascript" src="js/jquery-1.6.min.js"></script>
+    <script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="js/core.js"></script>
+    <script src="http://webapi.amap.com/maps?v=1.3&key=a0913e92907bdd4150e564d6439c8466"></script>
+    
+    <!--[if lt IE 9]>  
+    <script src="js/css3-mediaqueries.js"></script>  
+    <![endif]-->
+</head>
+<body>
+<h2>商户管理平台</h2>
+<p style="float:right"><span class="balance"></span> <sapn class="userinfo"></sapn><a href="login.html">退出</a></p>
+<p style="clear:both"></p>
+<div style="margin:20px 0 10px 0;">
+</div>
+
+    <div class="easyui-panel" style="padding:5px;">
+    <a href="#" class="easyui-menubutton" data-options="iconCls:'icon-edit'" layout='product'>商品管理</a>
+    <a href="#" class="easyui-menubutton" data-options="iconCls:'icon-help'" layout='bill'>账务管理</a>
+    <a href="#" class="easyui-menubutton" data-options="" layout='purchase'>采购管理</a>
+    <a href="#" class="easyui-menubutton" data-options="" layout='order'>订单管理</a>
+    </div>
+    
+
+<div class="content">
+
+</div>
+<div class="dialogs"></div>
+
+<script type="text/javascript">
+
+        $('.content').bigwin('loadView','layouts/product');
+        $('.dialogs').bigwin('loadView','forms/file_upload_form');
+        $('a.easyui-menubutton').click(function(){
+            $.navigate($(this).attr('layout'));
+        });
+
+        $.sget('/api/partners/'+qs['pa']+'/account/balance',{},function(data){
+            $('.balance').html(data.balance);
+        });
+
+</script>
+</body>
+</html>

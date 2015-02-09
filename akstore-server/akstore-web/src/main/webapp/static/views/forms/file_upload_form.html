@@ -1,0 +1,17 @@
+
+<div id="uploadDlg" class="easyui-dialog" title="附件上传" data-options="iconCls:'icon-save',closed:true,modal:true" style="height:150px">
+    <form id="fileuploadForm" method="post" enctype="multipart/form-data" >
+        <table>
+                <tr>
+                    <td>文件:</td>
+                    <td><input name="file" class="f1 easyui-filebox" data-options="required:true,buttonText: '选择图片'"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="上传"></td>
+                </tr>
+            </table>
+        <input name="base_size" class="base_size" value="52" type="hidden">
+        <input name="extra_size" class="extra_size" value="320"  type="hidden">
+    </form>
+</div>

@@ -1,0 +1,17 @@
+
+.footer {background: #666;overflow:hidden}
+.footer td{width: 60px;height: 30px;padding: 0px}
+
+.footer a{
+	width: 60px;
+	background: none;
+	
+}
+
+.nav_bar{width: 200px; margin: 0px auto;height: 30px; }
+
+.nav_bar a,.nav_bar a:hover{border: 1px solid #ddd;margin: 2px 8px;}
+
+.nav_bar a.active{
+	background: #ccf;
+}

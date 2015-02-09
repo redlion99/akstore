@@ -1,0 +1,50 @@
+<span >
+    <select name="address_province" class="f1 easyui-combobox province" data-options="required:true">
+        <option value=""></option>
+        <option value="上海">上海</option>
+    </select>
+</span>
+
+<span class=""><input name="address_city" class="f1 easyui-combobox city" data-options="required:true"></span>
+
+<span class=""><input name="address_street" class="f1 easyui-textbox street" data-options="required:true"></span>
+
+<input class="lat" name="location_lat" type="hidden"/> <input class="lng" name="location_lng" type="hidden"/>
+
+<img class="location_map" src="http://restapi.amap.com/v3/staticmap?location=116.48482,39.94858&zoom=10&size=440*280&labels=%E6%9C%9D%E9%98%B3%E5%85%AC%E5%9B%AD,2,0,16,0xFFFFFF,0x008000:116.48482,39.94858&key=ee95e52bf08006f63fd29bcfbcf21df0">
+
+<script type="text/javascript">
+
+    $('.province').combobox({required:true,onSelect:function(rec){
+        var cdata=[];
+        $(cities[rec.value]).each(function(i,v){
+            cdata.push({value:v,text:v});
+        });
+
+        $('.city').combobox({required:true,data:cdata});
+      }
+    })
+
+    $('.street').textbox({onChange:function(street){
+        var addr=$('.city').combobox('getValue')+street;
+            var data=geolocation(addr,function(data){
+                var poiArr = data.poiList.pois;
+                if(poiArr.length>0){
+                    var d=poiArr[0];
+                    var loc=d.location;
+                    $('.lat').val(d.location.getLat());
+                    $('.lng').val(d.location.getLng());
+                    $('.location_map').attr('src','http://restapi.amap.com/v3/staticmap?location='+loc.lng+','+loc.lat+'&zoom=14&size=440*280&labels='+addr+',2,0,16,0xFFFFFF,0x008000:'+loc.lng+','+loc.lat+'&key=ee95e52bf08006f63fd29bcfbcf21df0');
+                    console.log(loc);
+                }else{
+                    $('.street').val('');
+                }
+
+            });
+
+
+    }});
+
+</script>
+
+<script type="text/javascript" src="js/city.js"></script>

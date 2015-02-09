@@ -1,0 +1,50 @@
+<form class="shop_search_form" action="/api/admin/partners/shops" method="get">
+    <table>
+        <tr>
+            <td>门店名称:</td>
+            <td><input name="name" class="easyui-textbox" data-options="required:true"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="搜索" ></td>
+        </tr>
+    </table>
+</form>
+
+<div class="easyui-pagination shop_search_pager" data-options="pageSize:50">
+</div>
+
+<script type="text/javascript">
+(function(){
+    $('form.shop_search_form').form({
+        onSubmit: function(options){
+            var options=$(this).form('options');
+            var isValid = $(this).form('validate');
+            if (isValid){
+                console.log(options.url);
+                var params=$(this).serializeArray();
+                $.sget(options.url,params,function(data){
+                    flatArray(data.content)
+                    console.log(data.content);
+
+                    $('.shop_search_result').datagrid('loadData',data.content);
+                });
+            }
+            return false;
+        }
+    });
+    $('.shop_search_pager').pagination({
+        onSelectPage:function(pageNumber, pageSize){
+            $(this).pagination('loading');
+            search(pageNumber);
+            $(this).pagination('loaded');
+        }
+    });
+    function search(page){
+        $('form.shop_search_form').form('submit', {
+            url:'/api/admin/shops?page='+Math.max(page-1,0),
+        });
+    }
+    search(1);
+})();
+</script>

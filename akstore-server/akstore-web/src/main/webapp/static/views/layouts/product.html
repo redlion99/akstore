@@ -1,0 +1,28 @@
+
+<div class="easyui-panel" style="padding:5px;">
+    <div style="width:200px;float:left"  class="left">
+        <div style="padding:10px"><a id="btn" href="#" class="easyui-linkbutton btn_show_prd_grid" data-options="iconCls:'icon-search'" style="width:100%">搜索商品</a></div>
+        <div style="padding:10px"><a id="btn" href="#" class="easyui-linkbutton btn_create_prd" data-options="iconCls:'icon-add'" style="width:100%">添加商品</a></div>
+    </div>
+    <div style="width:700px;float:left"  class="right">
+        
+    </div>
+    <div style="clear:both"></div>
+
+</div>
+
+<script type="text/javascript">
+
+    
+
+    $('.btn_create_prd').click(function(){
+        $('.content .right').bigwin('loadView','forms/prd_create_form');
+    });
+
+    $('.btn_show_prd_grid').click(function(){
+        $('.content .right').bigwin('loadView','grids/product');
+    });
+
+    $('.btn_show_prd_grid').click();
+
+</script>

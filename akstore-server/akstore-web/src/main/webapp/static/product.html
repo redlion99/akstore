@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-transform ">
+    <link rel="stylesheet" type="text/css" href="style/mobile.css">
+    <script type="text/javascript" src="js/jquery-1.6.min.js"></script>
+    <script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="js/core.js"></script>
+    <title>Document</title>
+</head>
+<body style="min-height: 667px;">
+<div>
+    <section id="section" class="section">
+        <aside></aside>
+        <header id="header" class="header gb">
+            <h2>产品列表</h2>
+            <nav><a class="iback left" href=""></a> </nav>
+            <div class="altmsg" name="off"><h4>成功加入购物车</h4></div>
+            <div class="sort">
+                <ul>
+                    <li data-sort="0" class="cur">新品</li>
+                    <li data-sort="1" class="">热卖</li>
+                    <li data-sort="2,3" class="">价格<b class="arrUp"></b></li>
+                </ul>
+            </div>
+        </header>
+        <article id="article" class="article">
+
+        </article>
+
+        <footer class="footer">
+
+        </footer>
+    </section>
+</div>
+
+<script type="text/javascript">
+(function($){
+    $('.footer').bigwin('loadView','widgets/footer');
+
+    $('.article').bigwin('loadView','lists/product',function(){
+           $.sget('/api/shops/'+qs['shop']+'/products',null,function(data){
+                flatArray(data.content)
+                $('.product_list').datagrid('loadData',data.content);
+            })
+    });
+
+})(jQuery)
+
+</script>
+
+</body>
+</html>

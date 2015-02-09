@@ -1,0 +1,60 @@
+<form action="" method="get" class="order_search_form">
+    <table>
+        <tr>
+            <td>门店:</td>
+            <td><div class="shop_select"></div></td>
+        </tr>
+        <tr>
+            <td>日期:</td>
+            <td><input name="dateStart" class="easyui-datebox" data-options="sharedCalendar:'#cc'"> - <input name="dateEnd" class="easyui-datebox" data-options="sharedCalendar:'#cc'"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="搜索"></td>
+        </tr>
+    </table>
+    <div id="cc" class="easyui-calendar"></div>
+</form>
+
+<div class="easyui-pagination order_search_pager" data-options="pageSize:50">
+</div>
+
+
+<script type="text/javascript">
+(function(){
+
+    $('.shop_select').bigwin('loadView','forms/shops_of_partner',function(){
+        $('form.order_search_form').form({
+            onSubmit: function(options){
+                var options=$(this).form('options');
+                var isValid = $(this).form('validate');
+                if (isValid){
+                    console.log(options.url);
+                    var params=$(this).serializeArray();
+                    $.sget(options.url,params,function(data){
+                        flatArray(data.content)
+
+                        $('.order_search_result').treegrid('loadData',data.content);
+                    });
+                }
+                return false;
+            }
+        });
+        search(1);
+    });
+    
+    $('.order_search_pager').pagination({
+        onSelectPage:function(pageNumber, pageSize){
+            $(this).pagination('loading');
+            search(pageNumber);
+            $(this).pagination('loaded');
+        }
+    });
+    function search(page){
+        $('form.order_search_form').form('submit', {
+            url:'/api/partners/'+qs['pa']+'/orders?page='+Math.max(page-1,0),
+        });
+    }
+    
+})();
+</script>

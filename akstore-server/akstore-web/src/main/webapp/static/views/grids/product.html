@@ -1,0 +1,44 @@
+<div class="prd_search_form"></div>
+
+<table class="easyui-datagrid prd_search_result" title="" style="width:100%,height:250px"
+       data-options="singleSelect:true,collapsible:true">
+    <thead>
+    <tr>
+        <th data-options="field:'_name',width:80">商品名称</th>
+        <th data-options="field:'_price',width:80,align:'right'">价格</th>
+        <th data-options="field:'_predictCost',width:80,align:'right'">预估成本</th>
+        <th data-options="field:'cat1_name',width:80,align:'right'">类别</th>
+        <th data-options="field:'_shopName',width:200">门店</th>
+        <th data-options="field:'_shortDescription',width:250"></th>
+    </tr>
+    </thead>
+</table>
+
+
+<script type="text/javascript">
+    $('.prd_search_form').bigwin('loadView','forms/prd_search_form');
+
+    $('.prd_search_result').datagrid({toolbar: [{
+        text:'修改',
+        iconCls: 'icon-edit',
+        handler: function(){
+            var selected=$('.prd_search_result').datagrid('getSelected')._id;
+            $('.content .right').bigwin('loadView','forms/prd_create_form',function(){
+                console.log(selected);
+                if(selected){
+                    $.sget('/api/partners/'+qs['pa']+'/products/'+selected,{},function(data){
+                        data=flatObject(data);
+                        console.log(data);
+                        $('form.prd_create_from').form('load',data);
+                        if(data.children){
+                            $('form.prd_create_from .gridStockSelected').datagrid('loadData',data.children);
+                        }
+
+                    });
+                }
+                
+                
+            });
+        }
+    },'-']});
+</script>

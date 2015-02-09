@@ -1,0 +1,165 @@
+<form class="prd_create_from" action="" method="post">
+    <input name="_id" type="hidden">
+    <table>
+        <tr>
+            <td>门店名称:</td>
+            <td class="shop_selector"></td>
+        </tr>
+        <tr>
+            <td>商品名称:</td>
+            <td><input name="_name" class="easyui-textbox" data-options="required:true"></td>
+        </tr>
+        <tr>
+            <td>备注:</td>
+            <td><input name="_remark" class="easyui-textbox" data-options="required:true" value="？个/份"></td>
+        </tr>
+        <tr>
+            <td>分类2:</td>
+            <td>
+                <select class="easyui-combobox" name="cat1_name">
+                    <option value="时令水果">时令水果</option>
+                    <option value="水果套餐">水果套餐</option>
+                    <option value="果汁饮料">果汁饮料</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>价格:</td>
+            <td><input name="_price" class="easyui-textbox" data-options="required:true"></td>
+        </tr>
+        <tr>
+            <td>折扣:</td>
+            <td>
+                <select class="easyui-combobox" name="_discount" data-options="required:true">
+                    <option value="1.0">无折扣</option>
+                    <option value="0.9">9折</option>
+                    <option value="0.8">8折</option>
+                    <option value="0.7">7折</option>
+                    <option value="0.6">6折</option>
+                    <option value="0.5">5折</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>短描述:</td>
+            <td><input name="_shortDescription" class="easyui-textbox" data-options="multiline:false,required:true,width:250"></td>
+        </tr>
+        <tr>
+            <td>长描述:</td>
+            <td><input name="_description" class="easyui-textbox" data-options="multiline:true,required:true,width:250" style="height:160px"></td>
+        </tr>
+        <tr>
+            <td>原料:** 为了我们能够及时为您配货，请准确填写此项</td>
+            <td>
+                <table class="gridStockSelected easyui-datagrid" style="width:400px;height:100px"
+                       data-options="fitColumns:true,singleSelect:true">
+                    <thead>
+                    <tr>
+                        <th data-options="field:'product_id',width:100">ID</th>
+                        <th data-options="field:'product_name',width:100">产品</th>
+                        <th data-options="field:'_quantity',width:100">数量</th>
+                    </tr>
+                    </thead>
+                </table>
+        </tr>
+        <tr>
+            <td class="picture_upload" colspan="2"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="提交"></td>
+        </tr>
+    </table>
+</form>
+
+<div id="stockSelectDlg" class="easyui-dialog" title="My Dialog" style="width:520px;height:200px;"
+     data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
+    <div>请选择原来水果：<input class="dispatch_product easyui-combogrid" name="dispatch_product" data-options=""></div>
+    <div>数量：<input class="quantity" class="easyui-textbox" name="quantity" value="1"></div>
+</div>
+
+<script type="text/javascript">
+(function(){
+    $('.shop_selector').bigwin('loadView','forms/shops_of_partner',function(){
+
+        $('form.prd_create_from').form({
+            url:'/api/partners/'+qs['pa']+'/products',
+            onSubmit: function(){
+                var options=$(this).form('options');
+                var isValid = $(this).form('validate');
+                if (isValid){
+                    var params=$(this).serializeArray();
+                    params.push({name:"_dispatchSet",value:JSON.stringify($('.gridStockSelected',this).datagrid('getRows'))});
+                    $.spost(options.url,params,function(data){
+                        $.navigate('product');
+                    });
+                }
+                return false;
+            },
+            onLoadSuccess:function(data){
+                $('.picture_display').html('<img src="'+data._pictureUrl+'">');
+            }
+        });
+    });
+
+
+
+
+    $('.picture_upload').bigwin('loadView','forms/picture_upload_and_display');
+
+    $('.gridStockSelected').datagrid({toolbar:[{
+				text:'添加',
+				handler:function(){
+				    $('#stockSelectDlg').dialog('open');
+				}
+			},
+			{
+				text:'删除',
+				handler:function(){
+				    var grid=$('.gridStockSelected');
+				    var selected=grid.datagrid('getSelected');
+				    grid.datagrid('deleteRow',grid.datagrid('getRowIndex',selected));
+
+				}
+			}]
+			});
+
+    $('#stockSelectDlg').dialog({buttons:[{
+				text:'添加',
+				handler:function(){
+				    $('.gridStockSelected').datagrid('appendRow',{
+                        product_id:$(' #stockSelectDlg .dispatch_product').combogrid('getValue'),
+                        product_name:$('#stockSelectDlg .dispatch_product').combogrid('getText'),
+                        _quantity:$('#stockSelectDlg .quantity').val(),
+                        _price:11
+				    });
+				    $('#stockSelectDlg').dialog('close');
+				}
+			}],
+			onOpen:function(){
+			    var self=this;
+                $.sget('/api/partners/'+qs['pa']+'/dispatch/products',{},function(data){
+                            flatArray(data.content)
+                            console.log(data.content);
+                            $('.dispatch_product',$(self)).combogrid({panelWidth:500,
+                                value:'',
+                                idField:'_id',
+                                textField:'_name',
+                                columns:[[
+                                    {field:'_name',title:'Name',width:100},
+                                    {field:'_unitPrice',title:'Price',width:120},
+                                    {field:'_atomWeight',title:'Weight',width:100},
+                                    {field:'_origin',title:'origin',width:100}
+                                ]],
+                                data:data.content
+                                });
+
+                        });
+
+			    }
+			});
+
+
+
+})();
+</script>

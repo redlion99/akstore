@@ -1,0 +1,45 @@
+<form action="" method="get" class="purchase_search_form">
+
+</form>
+
+<div class="easyui-pagination purchase_search_pager" data-options="pageSize:50">
+</div>
+
+<script type="text/javascript">
+(function(){
+
+        $('form.purchase_search_form').form({
+            onSubmit: function(options){
+                var options=$(this).form('options');
+                var isValid = $(this).form('validate');
+                if (isValid){
+                    console.log(options.url);
+                    var params=$(this).serializeArray();
+                    $.sget(options.url,params,function(data){
+                        flatArray(data.content)
+                        console.log(data.content);
+
+                        $('.purchase_search_result').datagrid('loadData',data.content);
+                    });
+                }
+                return false;
+            }
+        });
+        search(1);
+
+
+    $('.purchase_search_pager').pagination({
+        onSelectPage:function(pageNumber, pageSize){
+            $(this).pagination('loading');
+            search(pageNumber);
+            $(this).pagination('loaded');
+        }
+    });
+    function search(page){
+        $('form.purchase_search_form').form('submit', {
+            url:'/api/partners/'+qs['pa']+'/purchases?page='+Math.max(page-1,0),
+        });
+    }
+
+})();
+</script>

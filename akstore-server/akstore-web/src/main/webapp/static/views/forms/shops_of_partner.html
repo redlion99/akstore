@@ -1,0 +1,10 @@
+<select name="shop_id" class="easyui-combobox shop" data-options="required:true,valueField:'id',textField:'name'" style="width:120px">
+</select>
+
+<script type="text/javascript">
+    $.sget('/api/partners/'+qs['pa']+'/shops',{},function(data){
+    	console.log(data.content);
+        $('.shop').combobox({required:true,data:data.content});
+    })
+
+</script>
