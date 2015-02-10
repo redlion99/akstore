@@ -85,6 +85,7 @@ trait CommonRoute {
             val fore=user.tokenExpiredAt.getTime-System.currentTimeMillis()<3600000*24*7
             val refreshedToken = userService.getAvailableToken(user,fore)
             val d = new util.HashMap[String, Object]
+            d.put("username", user.getUsername)
             d.put("token", refreshedToken)
             d.put("tokenExpiredAt", Long.box(user.tokenExpiredAt.getTime))
             d.toJson

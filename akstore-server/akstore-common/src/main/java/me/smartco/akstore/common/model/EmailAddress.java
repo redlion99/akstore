@@ -74,7 +74,7 @@ public class EmailAddress {
         return email.hashCode();
     }
 
-    @Component
+    @Component("EmailAddressToStringConverter")
     static class EmailAddressToStringConverter implements Converter<EmailAddress, String> {
 
         /*
@@ -87,7 +87,7 @@ public class EmailAddress {
         }
     }
 
-    @Component
+    @Component("StringToEmailAddressConverter")
     static class StringToEmailAddressConverter implements Converter<String, EmailAddress> {
 
         /*

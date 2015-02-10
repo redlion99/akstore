@@ -55,7 +55,7 @@
     <build>
         <plugins>
 
-            <plugin>
+            <!--plugin>
                 <groupId>com.mysema.maven</groupId>
                 <artifactId>apt-maven-plugin</artifactId>
                 <version>1.0.8</version>
@@ -71,7 +71,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin-->
         </plugins>
     </build>
 

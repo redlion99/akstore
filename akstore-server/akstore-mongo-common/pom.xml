@@ -24,4 +24,26 @@
             <version>${spring.mongo.version}</version>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+
+            <!--plugin>
+                <groupId>com.mysema.maven</groupId>
+                <artifactId>apt-maven-plugin</artifactId>
+                <version>1.0.8</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>process</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>target/generated-sources</outputDirectory>
+                            <processor>org.springframework.data.mongodb.repository.support.MongoAnnotationProcessor</processor>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin-->
+        </plugins>
+    </build>
 </project>

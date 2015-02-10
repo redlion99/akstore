@@ -29,11 +29,7 @@
             <artifactId>akstore-biz</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>me.smartco.akkalk</groupId>
-            <artifactId>akkalk-push</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+
 
     </dependencies>
 

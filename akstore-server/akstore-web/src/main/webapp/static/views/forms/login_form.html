@@ -29,11 +29,11 @@
                 $.post(options.url,params,function(data){
                     console.log(data);
                     if(data.staff){
-                        document.location.href="staff.html?t="+data.token+'&u='+data.staff.user.username+'&pa='+data.primaryPartner.id;
+                        document.location.href="staff.html?t="+data.token+'&u='+data.username+'&pa='+data.primaryPartner.id;
                     }else if(data.partnerStaff){
-                        document.location.href="partner.html?t="+data.token+'&u='+data.partnerStaff.user.username+'&pa='+data.partnerStaff.partner.id;
+                        document.location.href="partner.html?t="+data.token+'&u='+data.username+'&pa='+data.partnerStaff.partner.id;
                     }else if(data.customer){
-                        document.location.href="customer.html?t="+data.token+'&u='+data.customer.user.username+'&cu='+data.customer.id;
+                        document.location.href="customer.html?t="+data.token+'&u='+data.username+'&cu='+data.customer.id;
                     }
                 });
             }
