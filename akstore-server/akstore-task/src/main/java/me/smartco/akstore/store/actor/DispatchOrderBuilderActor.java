@@ -1,7 +1,10 @@
 package me.smartco.akstore.store.actor;
 
 import akka.actor.UntypedActor;
-import me.smartco.akstore.biz.service.PartnerService;
+import me.smartco.akstore.transaction.service.TransactionService;
+import me.smartco.akstore.integration.CompositeService;
+import me.smartco.akstore.integration.ServiceFacade;
+import me.smartco.akstore.store.service.PartnerService;
 import me.smartco.akstore.store.message.BuildDispatchOrder;
 import me.smartco.akstore.common.model.OrderStatus;
 import me.smartco.akstore.store.mongodb.market.DispatchOrder;
@@ -25,7 +28,10 @@ public class DispatchOrderBuilderActor extends UntypedActor {
         if(message instanceof BuildDispatchOrder){
             logger.info("building dispatch orders");
             BuildDispatchOrder buildDispatchOrder=(BuildDispatchOrder)message;
-            PartnerService partnerManager=SpringUtil.getInstance().getBean(PartnerService.class);
+            ServiceFacade serviceFacade=SpringUtil.getInstance().getBean(ServiceFacade.class);
+            PartnerService partnerManager=serviceFacade.getPartnerService();
+            CompositeService compositeService=serviceFacade.getCompositeService();
+            TransactionService transactionService=serviceFacade.getTransactionService();
             List<Shop> shopList=partnerManager.getShopRepository().findByDispatchOptions(buildDispatchOrder.getDispatchOptions());
 
             for(Shop shop:shopList){
@@ -37,12 +43,12 @@ public class DispatchOrderBuilderActor extends UntypedActor {
                     dateFrom=previousOrder.getCreateTime();
                 }
                 logger.info("building dispatch orders for "+shop.getName()+" from "+dateFrom);
-                List<OrderEntity> orderList=partnerManager.getOrderDAO().findByShopIdAndStatusAndCreateTimeGreaterThan(shop.getId(), OrderStatus.created, dateFrom);
+                List<OrderEntity> orderList=transactionService.findByShopIdAndStatusAndCreateTimeGreaterThan(shop.getId(), OrderStatus.created, dateFrom);
                 for(OrderEntity order:orderList){
                     try {
-                        dispatchOrder.merge(partnerManager.elementOfOrder(order));
+                        dispatchOrder.merge(compositeService.elementOfOrder(order));
                         order.setStatus(OrderStatus.assigned);
-                        partnerManager.getOrderDAO().save(order);
+                        transactionService.getOrderDAO().save(order);
                     }catch (Exception e){
                         logger.error("merging order",e);
                     }

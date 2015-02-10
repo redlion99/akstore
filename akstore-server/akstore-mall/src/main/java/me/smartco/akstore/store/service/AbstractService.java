@@ -1,4 +1,4 @@
-package me.smartco.akstore.biz.service;
+package me.smartco.akstore.store.service;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSelection;

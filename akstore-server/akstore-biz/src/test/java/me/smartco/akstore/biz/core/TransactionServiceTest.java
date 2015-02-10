@@ -1,8 +1,8 @@
 package me.smartco.akstore.biz.core;
 
 import me.smartco.akstore.biz.AbstractIntegrationTest;
-import me.smartco.akstore.biz.service.MallService;
-import me.smartco.akstore.biz.service.TransactionService;
+import me.smartco.akstore.store.service.MallService;
+import me.smartco.akstore.transaction.service.TransactionService;
 import me.smartco.akstore.common.model.PaymentType;
 import me.smartco.akstore.exception.CodeValidateFailedException;
 import me.smartco.akstore.exception.ShopTooFarException;
@@ -12,7 +12,6 @@ import me.smartco.akstore.integration.CompositeService;
 import me.smartco.akstore.store.mongodb.mall.Cart;
 import me.smartco.akstore.store.mongodb.mall.Customer;
 import me.smartco.akstore.store.mongodb.mall.Product;
-import me.smartco.akstore.user.service.UserService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +48,7 @@ public class TransactionServiceTest extends AbstractIntegrationTest {
         Assert.assertTrue(cart.getGroups().size()>0);
         Assert.assertTrue(cart.getTotal().doubleValue()>0);
         Shipping shipping=new Shipping(new Address("1","2","3"),"zhangshan","1234", Shipping.ShippingMethod.express);
-        transactionService.initOrderGroupFromCart(cart, shipping, PaymentType.cash);
+        compositeService.initOrderGroupFromCart(cart, shipping, PaymentType.cash);
         mallManager.getCartRepository().delete(cart);
     }
 }

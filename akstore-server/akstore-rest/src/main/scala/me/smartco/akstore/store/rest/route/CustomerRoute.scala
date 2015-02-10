@@ -12,10 +12,10 @@ import Shipping.ShippingMethod
 import me.smartco.akstore.store.rest.event.Sender
 import me.smartco.akstore.store.rest.json.CartItem
 import me.smartco.akstore.store.spring.Bean
-import me.smartco.akstore.biz.service.{TransactionService, MallService}
 import me.smartco.akstore.store.mongodb.mall._
 import me.smartco.akstore.common.util.MD5Util
 import me.smartco.akstore.transaction.model.OrderEntity
+import me.smartco.akstore.transaction.service.TransactionService
 import me.smartco.akstore.user.model.User
 import org.springframework.data.domain.{PageImpl, PageRequest}
 import spray.http.StatusCodes
@@ -183,6 +183,7 @@ trait CustomerRoute {
                 formFields('_total.as[Double], 'shipping_address_province, 'shipping_address_city, 'shipping_address_street
                   , 'shipping_receiver, 'shipping_phone, 'location_lat.as[Double], 'location_lng.as[Double], 'payment.?) {
                   (total, shipping_address_province, shipping_address_city, shipping_address_street, shipping_receiver, shipping_phone, location_lat, location_lng, paymentOption) =>
+                    val compositeService=facade.getCompositeService
                     complete {
                       val address = new Address(shipping_address_street, shipping_address_city, shipping_address_province)
                       val shipping = new Shipping(address, shipping_receiver, shipping_phone, ShippingMethod.normal)
@@ -195,7 +196,7 @@ trait CustomerRoute {
                       val cart = mallManager.getCart(customer)
 
                       if (cart.getTotal.doubleValue().equals(total)) {
-                        val orderGroup = transactionService.initOrderGroupFromCart(cart, shipping, PaymentType.valueOf(paymentOption.getOrElse("cash")))
+                        val orderGroup = compositeService.initOrderGroupFromCart(cart, shipping, PaymentType.valueOf(paymentOption.getOrElse("cash")))
                         mallManager.getCartRepository.delete(cart)
                         val it = orderGroup.values().iterator()
                         while (it.hasNext) {

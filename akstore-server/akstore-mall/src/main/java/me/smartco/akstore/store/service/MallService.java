@@ -1,18 +1,10 @@
-package me.smartco.akstore.biz.service;
+package me.smartco.akstore.store.service;
 
-import me.smartco.akstore.common.model.*;
-import me.smartco.akstore.common.event.order.CompletedEvent;
-import me.smartco.akstore.transaction.model.OrderHistory;
-import me.smartco.akstore.common.model.OrderStatus;
-import me.smartco.akstore.transaction.model.*;
+
 import me.smartco.akstore.store.mongodb.core.*;
 import me.smartco.akstore.store.mongodb.mall.*;
 import me.smartco.akstore.store.mongodb.partner.Shop;
 import me.smartco.akstore.store.mongodb.partner.ShopRepository;
-import me.smartco.akstore.transaction.model.LineItem;
-import me.smartco.akstore.transaction.repository.LineItemDAO;
-import me.smartco.akstore.transaction.repository.OrderDAO;
-import me.smartco.akstore.transaction.repository.OrderHistoryDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +17,6 @@ import org.springframework.data.mongodb.core.mapreduce.GroupBy;
 import org.springframework.data.mongodb.core.mapreduce.GroupByResults;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
@@ -53,18 +44,10 @@ public class MallService extends AbstractService {
     @Autowired
     private CommentRepository commentRepository;
 
-
-    @Autowired
-    private LineItemDAO lineItemDAO;
-
     @Autowired
     private RefereeRepository refereeRepository;
 
-    @Autowired
-    private OrderDAO orderDAO;
 
-    @Autowired
-    private OrderHistoryDAO orderHistoryDAO;
 
 
     private Logger logger= LoggerFactory.getLogger(MallService.class);
@@ -153,37 +136,7 @@ public class MallService extends AbstractService {
         }
     }
 
-    public void aggOrders() throws SQLException {
-        logger.info("Aggregation for orders");
-        Calendar calendar=Calendar.getInstance();
-        calendar.add(Calendar.MONTH,-1);
-        List results=lineItemDAO.aggOrdersBefore(calendar.getTime());
-        Iterator<ResultSet> it=results.iterator();
-        while (it.hasNext()){
-            ResultSet gr=it.next();
-            Product product=productRepository.findOne(gr.getString("productId"));
-            product.setSold(gr.getInt("sold"));
-            getProductRepository().save(product);
-        }
-    }
 
-    public void aggDeliveredOrders(){
-        Calendar calendar=Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_MONTH,-7);
-        Page<OrderEntity> orderEntities=orderDAO.findByStatusAndUpdateTimeLessThan(OrderStatus.delivered,calendar.getTime(), AbstractDocument.pageRequest(0));
-        Iterator<OrderEntity> it =orderEntities.iterator();
-        while (it.hasNext()){
-            OrderEntity orderEntity=it.next();
-            for(LineItem lineItem:orderEntity.lineItems()){
-                Comment comment=new Comment(customerRepository.findOne(orderEntity.getCustomerId()),productRepository.findOne(lineItem.getProductId()),5,"");
-                commentRepository.save(comment);
-            }
-            orderEntity.setStatus(OrderStatus.completed);
-            OrderHistory orderHistory=new OrderHistory(orderEntity);
-            orderHistoryDAO.save(orderHistory);
-            sendTaskMessage(new CompletedEvent(orderEntity.getId()));
-        }
-    }
 
     public Referee getReferee(String id){
         return refereeRepository.findOne(id);

@@ -8,9 +8,9 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import me.smartco.akstore.common.model.Attachment
 import me.smartco.akstore.integration.ServiceFacade
 import me.smartco.akstore.store.mongodb.mall.{Advertisement, AdvertisementRepository}
+import me.smartco.akstore.store.service.MallService
 import me.smartco.akstore.store.spring.Bean
 import me.smartco.akstore.biz.conf.Configuration
-import me.smartco.akstore.biz.service.MallService
 import me.smartco.akstore.store.mongodb.core.AttachmentsRepository
 import me.smartco.akstore.common.util.{MD5Util, ImgUtil}
 import spray.http.{HttpCookie, StatusCodes, BodyPart}

@@ -3,10 +3,10 @@ package me.smartco.akstore.store.rest.route
 import akka.actor.ActorContext
 import com.fasterxml.jackson.databind.ObjectMapper
 import me.smartco.akstore.biz.conf.Configuration
-import me.smartco.akstore.biz.service.MallService
 import me.smartco.akstore.common.model.{OrderStatus, AbstractDocument}
 import me.smartco.akstore.store.mongodb.mall.{Product, ProductRepository}
 import me.smartco.akstore.store.mongodb.partner.Shop
+import me.smartco.akstore.store.service.MallService
 import me.smartco.akstore.store.spring.Bean
 import spray.routing.Directives._
 import spray.routing.PathMatchers.Segment

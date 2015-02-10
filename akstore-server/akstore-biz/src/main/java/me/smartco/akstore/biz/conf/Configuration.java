@@ -1,6 +1,6 @@
 package me.smartco.akstore.biz.conf;
 
-import me.smartco.akstore.biz.service.PartnerService;
+import me.smartco.akstore.store.service.PartnerService;
 import me.smartco.akstore.common.model.Account;
 import me.smartco.akstore.store.mongodb.core.AccountRepository;
 import me.smartco.akstore.store.mongodb.partner.Partner;

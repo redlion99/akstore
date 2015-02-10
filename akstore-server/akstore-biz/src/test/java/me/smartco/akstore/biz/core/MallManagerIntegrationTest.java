@@ -7,7 +7,7 @@ import me.smartco.akstore.common.spring.BriefContentPage;
 import me.smartco.akstore.biz.conf.Configuration;
 import me.smartco.akstore.exception.CodeValidateFailedException;
 import me.smartco.akstore.exception.ShopTooFarException;
-import me.smartco.akstore.biz.service.MallService;
+import me.smartco.akstore.store.service.MallService;
 import me.smartco.akstore.biz.AbstractIntegrationTest;
 import me.smartco.akstore.store.mongodb.mall.*;
 import me.smartco.akstore.user.service.UserService;
@@ -85,7 +85,7 @@ public class MallManagerIntegrationTest extends AbstractIntegrationTest {
     @Test
     public void testGroup() throws SQLException {
         mallManager.aggComments();
-        mallManager.aggOrders();
+        compositeService.aggOrders();
     }
 
 }

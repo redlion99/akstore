@@ -1,8 +1,8 @@
 package me.smartco.akstore.integration;
 
-import me.smartco.akstore.biz.service.MallService;
-import me.smartco.akstore.biz.service.PartnerService;
-import me.smartco.akstore.biz.service.TransactionService;
+import me.smartco.akstore.store.service.MallService;
+import me.smartco.akstore.store.service.PartnerService;
+import me.smartco.akstore.transaction.service.TransactionService;
 import me.smartco.akstore.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

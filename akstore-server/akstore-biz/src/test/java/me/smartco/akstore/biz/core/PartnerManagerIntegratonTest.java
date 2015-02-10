@@ -1,11 +1,9 @@
 package me.smartco.akstore.biz.core;
 
-import me.smartco.akstore.biz.service.MallService;
-import me.smartco.akstore.biz.service.PartnerService;
+import me.smartco.akstore.store.service.MallService;
+import me.smartco.akstore.store.service.PartnerService;
 import me.smartco.akstore.exception.CodeValidateFailedException;
 import me.smartco.akstore.biz.AbstractIntegrationTest;
-import me.smartco.akstore.integration.CompositeService;
-import me.smartco.akstore.integration.ServiceFacade;
 import me.smartco.akstore.store.mongodb.partner.Partner;
 import me.smartco.akstore.store.mongodb.partner.PartnerStaff;
 import me.smartco.akstore.user.model.User;

@@ -5,10 +5,10 @@ import akka.actor.ActorContext
 import com.fasterxml.jackson.databind.ObjectMapper
 import me.smartco.akstore.common.model.{Shipping, Address, PaymentType}
 import me.smartco.akstore.exception.CodeValidateFailedException
-import me.smartco.akstore.biz.service.{TransactionService, MallService}
 import me.smartco.akstore.integration.ServiceFacade
 import me.smartco.akstore.store.mongodb.mall.{Cart, Customer, Product, ProductRepository}
 import me.smartco.akstore.store.spring.Bean
+import me.smartco.akstore.transaction.service.TransactionService
 import spray.routing.Directives._
 import spray.routing.PathMatchers.Segment
 import scala.collection.JavaConverters._
@@ -44,7 +44,7 @@ trait TestRoute {
             }
             mallManager.getCartRepository.save(cart)
             val shipping: Shipping = new Shipping(new Address("罗山路50号", "浦东","上海" ), "里斯", "13333333333", Shipping.ShippingMethod.express)
-            val orders=transactionService.initOrderGroupFromCart(cart, shipping, PaymentType.cash)
+            val orders=compositeService.initOrderGroupFromCart(cart, shipping, PaymentType.cash)
             mallManager.getCartRepository.delete(cart)
             orders.toBriefJson
         }

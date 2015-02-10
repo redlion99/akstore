@@ -1,8 +1,8 @@
 package me.smartco.akstore.store.rest
 
 import akka.actor._
-import me.smartco.akstore.biz.service.MallService
 import me.smartco.akstore.integration.ServiceFacade
+import me.smartco.akstore.store.service.MallService
 import me.smartco.akstore.store.spring.Bean
 import me.smartco.akstore.user.model.User
 import spray.http.HttpCookie

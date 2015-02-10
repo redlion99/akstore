@@ -7,8 +7,8 @@ import me.smartco.akstore.common.model.{Payment, Address, AbstractDocument}
 import me.smartco.akstore.integration.ServiceFacade
 import me.smartco.akstore.store.mongodb.mall.{Advertisement, Category}
 import me.smartco.akstore.store.mongodb.market.DispatchProduct
+import me.smartco.akstore.store.service.PartnerService
 import me.smartco.akstore.store.spring.Bean
-import me.smartco.akstore.biz.service.PartnerService
 import me.smartco.akstore.store.mongodb.core.AttachmentsRepository
 import me.smartco.akstore.store.mongodb.partner.{DispatchOptions, PartnerStaff}
 import me.smartco.akstore.common.util.ImgUtil
