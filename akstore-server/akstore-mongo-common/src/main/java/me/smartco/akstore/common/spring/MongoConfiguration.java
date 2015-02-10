@@ -5,6 +5,7 @@ import com.mongodb.WriteConcern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.convert.CustomConversions;
+import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.scheduling.quartz.CronTriggerBean;
 import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
@@ -24,9 +26,9 @@ import java.util.List;
  */
 @Configuration
 @ComponentScan(basePackages="me.smartco.akstore")
-@EnableMongoRepositories(basePackages={"me.smartco.akstore.store.mongodb"})
+@EnableMongoRepositories(basePackages={"me.smartco.akstore.store.mongodb","me.smartco.akstore.user.repository"})
 public class MongoConfiguration extends AbstractMongoConfiguration {
-
+    @Autowired private ApplicationContext context;
 
     @Autowired
     private List<Converter<?, ?>> converters;
@@ -50,9 +52,10 @@ public class MongoConfiguration extends AbstractMongoConfiguration {
         return new CustomConversions(converters);
     }
 
-    @Override
+
     @Bean
-    public MongoTemplate mongoTemplate() throws Exception {
-        return new MongoTemplate(mongoDbFactory(), mappingMongoConverter());
+    @Override
+    public MongoMappingContext mongoMappingContext() throws ClassNotFoundException {
+        return new SeparatedMongoMappingContext(context);
     }
 }

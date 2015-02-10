@@ -2,7 +2,6 @@ package me.smartco.akstore.store.mongodb.partner;
 
 import me.smartco.akstore.common.model.AbstractDocument;
 import me.smartco.akstore.common.model.Contact;
-import me.smartco.akstore.store.mongodb.core.user.User;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
@@ -13,9 +12,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * Created by libin on 14-11-12.
  */
-@CompoundIndexes({
-        @CompoundIndex(name = "partnerStaff_ref_to_user", def = "{'user' : 1}", unique=true)
-})
 @Document
 public class PartnerStaff extends AbstractDocument {
 

@@ -11,7 +11,7 @@ import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 /**
  * Created by libin on 14-12-21.
  */
-public interface DispatchOrderRepository extends MongoRepository<DispatchOrder,String> ,QueryDslPredicateExecutor<DispatchOrder> {
+public interface DispatchOrderRepository extends MongoRepository<DispatchOrder,String> {
     public Page<DispatchOrder> findByShop(Shop shop,Pageable page);
     public Page<DispatchOrder> findByPartner(Partner partner,Pageable page);
 

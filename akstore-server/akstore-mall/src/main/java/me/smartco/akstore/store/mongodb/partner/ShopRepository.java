@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by libin on 14-11-11.
  */
-public interface ShopRepository extends MongoRepository<Shop,String> ,QueryDslPredicateExecutor<Shop> {
+public interface ShopRepository extends MongoRepository<Shop,String>{
 
     public Page<Shop> findByNameLike(String name, Pageable pageable);
     public Page<Shop> findByPartner(Partner partner, Pageable pageable);

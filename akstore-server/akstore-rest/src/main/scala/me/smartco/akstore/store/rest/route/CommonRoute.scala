@@ -97,11 +97,13 @@ trait CommonRoute {
           formFields('username, 'password, 'mobile, 'code, 'email.?) { (username, password, mobile,code, email) =>
             complete {
               val compositeService=facade.getCompositeService
+              val userService=facade.getUserService
                 var customer = compositeService.register(username, password, email.getOrElse(null), mobile,code)
                 if(null!=customer){
                   val d = new util.HashMap[String,Object]()
-                  d.put("token",userService.getAvailableToken(userService.findById(customer.getId)))
-                  d.put("tokenExpiredAt",Long.box(customer.getUser.tokenExpiredAt.getTime))
+                  val user=userService.findById(customer.getId)
+                  d.put("token",userService.getAvailableToken(user))
+                  d.put("tokenExpiredAt",Long.box(user.tokenExpiredAt.getTime))
                   d.put("customer",customer)
                   customer.toJson
                 }else{

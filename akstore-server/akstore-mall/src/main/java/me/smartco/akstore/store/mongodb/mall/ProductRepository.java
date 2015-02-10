@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by libin on 14-11-7.
  */
-public interface ProductRepository extends MongoRepository<Product,String>, QueryDslPredicateExecutor<Product> {
+public interface ProductRepository extends MongoRepository<Product,String> {
 
     /**
      * Returns a {@link Page} of {@link Product}s having a description which contains the given snippet.

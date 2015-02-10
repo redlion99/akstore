@@ -3,7 +3,6 @@ package me.smartco.akstore.store.mongodb.mall;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import me.smartco.akstore.common.model.*;
-import me.smartco.akstore.store.mongodb.core.user.User;
 import me.smartco.akstore.store.mongodb.partner.Shop;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
@@ -33,9 +32,6 @@ public class Customer extends AbstractDocument {
 
     private String realname;
 
-
-    @DBRef
-    private User user;
 
     private Contact contact=new Contact();
 
@@ -83,10 +79,7 @@ public class Customer extends AbstractDocument {
         this.realname = realname;
     }
 
-    @JsonView(Views.Full.class)
-    public User getUser() {
-        return user;
-    }
+
 
     /**
      * Adds the given {@link me.smartco.akstore.common.model.Address} to the {@link Customer}.
