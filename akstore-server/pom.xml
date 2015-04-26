@@ -18,6 +18,7 @@
         <module>akstore-rest</module>
         <module>akstore-web</module>
         <module>akstore-task</module>
+        <module>akstore-user-oauth</module>
     </modules>
 
     <properties>
@@ -25,6 +26,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <akstore.version>1.0-SNAPSHOT</akstore.version>
         <spring.version>4.0.7.RELEASE</spring.version>
+        <spring.security.version>3.2.6.RELEASE</spring.security.version>
+        <spring.security.oauth.version>2.0.7.RELEASE</spring.security.oauth.version>
         <spring.data.commons.version>1.9.0.RELEASE</spring.data.commons.version>
         <slf4j.version>1.7.1</slf4j.version>
         <logback.version>1.0.6</logback.version>
@@ -104,6 +107,11 @@
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
+                    <encoding>UTF-8</encoding>
+                    <compilerArguments>
+                        <verbose />
+
+                    </compilerArguments>
                 </configuration>
             </plugin>
 

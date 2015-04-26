@@ -18,8 +18,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 public class ImgUtil {
 
@@ -130,8 +128,8 @@ public class ImgUtil {
 
             // 保存处理后的文件
             FileOutputStream out = new FileOutputStream(imgPath);
-            JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
-            encoder.encode(image);
+            //JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
+            //encoder.encode(image);
             out.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -176,8 +174,8 @@ public class ImgUtil {
             g.drawString(text, x, y);
             g.dispose();
             FileOutputStream out = new FileOutputStream(imgPath);
-            JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
-            encoder.encode(image);
+            //JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
+            //encoder.encode(image);
             out.close();
         } catch (Exception e) {
             System.out.println(e);

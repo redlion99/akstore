@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>akstore-server</artifactId>
+        <groupId>me.smartco.akstore</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>akstore-user-oauth</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>me.smartco.akstore</groupId>
+            <artifactId>akstore-user</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security.oauth</groupId>
+            <artifactId>spring-security-oauth2</artifactId>
+            <version>${spring.security.oauth.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.codehaus.jackson</groupId>
+                    <artifactId>jackson-mapper-asl</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <!-- 		<finalName>spring-security-mongodb</finalName>
+         -->		<plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+                <source>1.6</source>
+                <target>1.6</target>
+            </configuration>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+        </plugin>
+        <plugin>
+            <groupId>org.mortbay.jetty</groupId>
+            <artifactId>jetty-maven-plugin</artifactId>
+            <configuration>
+                <connectors>
+                    <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                        <port>9090</port>
+                        <maxIdleTime>60000</maxIdleTime>
+                    </connector>
+                </connectors>
+                <!-- Redeploy every x seconds if changes are detected, 0 for no automatic redeployment -->
+                <scanIntervalSeconds>1</scanIntervalSeconds>
+                <!-- make sure Jetty also finds the widgetset -->
+                <webAppConfig>
+                    <contextPath>/</contextPath>
+                    <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
+                        <resourcesAsCSV>src/main/webapp</resourcesAsCSV>
+                    </baseResource>
+                </webAppConfig>
+            </configuration>
+        </plugin>
+    </plugins>
+
+    </build>
+</project>
