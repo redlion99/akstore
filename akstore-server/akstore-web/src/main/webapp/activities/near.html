@@ -1,0 +1,28 @@
+<html>
+<head>
+    <title>活动列表</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../css/main.css" />
+    <script src="../js/react.min.js"></script>
+    <script src="../js/JSXTransformer.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+</head>
+<body>
+<div id="content">
+    <div id="heading"></div>
+    <div id="list"></div>
+
+</div>
+
+<script type="text/jsx" src="../src/product.js"></script>
+<script type="text/jsx">
+
+React.render(<FilterableProductTable/>, $('#list').get(0));
+
+
+    </script>
+</body>
+</html>

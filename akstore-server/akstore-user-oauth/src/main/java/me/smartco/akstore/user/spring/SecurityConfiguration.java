@@ -1,6 +1,5 @@
 package me.smartco.akstore.user.spring;
 
-import me.smartco.akstore.user.security.LocalAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

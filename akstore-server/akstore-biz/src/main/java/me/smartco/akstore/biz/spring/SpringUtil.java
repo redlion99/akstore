@@ -21,7 +21,11 @@ public class SpringUtil {
     }
 
     private SpringUtil() {
-        applicationContext=new AnnotationConfigApplicationContext(MongoConfiguration.class, JpaConfiguration.class,BizConfiguration.class);
+        try {
+            applicationContext = new AnnotationConfigApplicationContext(MongoConfiguration.class, JpaConfiguration.class, BizConfiguration.class);
+        }catch (Throwable e){
+            e.printStackTrace();
+        }
     }
 
     public <T> T getBean(java.lang.Class<T> aClass){

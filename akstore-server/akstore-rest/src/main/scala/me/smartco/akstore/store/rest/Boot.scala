@@ -1,5 +1,7 @@
 package me.smartco.akstore.store.rest
 
+import java.util.Date
+
 import akka.actor.Props
 import akka.io.IO
 import akka.pattern.ask
@@ -23,14 +25,6 @@ trait Boot {
     system.log.info("Application shut down")
   }
 
-
-
-  // create and start our service actor
-  val serviceActor = system.actorOf(Props[RestServiceActor], "rest-service")
-
-  println("start actor:")
-  println(serviceActor)
-
   val springActor = system.actorOf(
     props = Props[SpringActor],
     name = "spring"
@@ -38,10 +32,17 @@ trait Boot {
   println("start actor:")
   println(springActor)
 
+  // create and start our service actor
+  val serviceActor = system.actorOf(Props[RestServiceActor], "rest-service")
+
+  println("start actor:")
+  println(serviceActor)
 
 
 
-  springActor ! Start()
+
+
+  springActor ! Start
 
 }
 
@@ -53,4 +54,6 @@ object AppBoot extends App with Boot{
   implicit val timeout = Timeout(5.seconds)
   // start a new HTTP server on port 8080 with our service actor as the handler
   IO(Http) ? Http.Bind(serviceActor, interface = "localhost", port = 9090)
+
 }
+

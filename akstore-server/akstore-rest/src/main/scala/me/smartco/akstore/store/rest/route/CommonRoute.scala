@@ -4,6 +4,9 @@ package me.smartco.akstore.store.rest.route
 import java.util
 
 import akka.actor.ActorContext
+import akka.io.IO
+import akka.util.Timeout
+import scala.concurrent.duration._
 import com.fasterxml.jackson.databind.ObjectMapper
 import me.smartco.akstore.common.model.Attachment
 import me.smartco.akstore.integration.ServiceFacade
@@ -13,17 +16,16 @@ import me.smartco.akstore.store.spring.Bean
 import me.smartco.akstore.biz.conf.Configuration
 import me.smartco.akstore.store.mongodb.core.AttachmentsRepository
 import me.smartco.akstore.common.util.{MD5Util, ImgUtil}
-import spray.http.{HttpCookie, StatusCodes, BodyPart}
+import spray.can.Http
+import spray.http._
 import spray.routing.{AuthenticationFailedRejection, Directives, MalformedQueryParamRejection}
 
-import scala.collection.mutable
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{Await, Future, ExecutionContext}
 
 import spray.routing.Directives._
 import me.smartco.akstore.store.rest.json.Resources._
-import spray.httpx.unmarshalling._
-import spray.httpx.marshalling._
-
+import HttpMethods._
+import akka.pattern.ask
 import StatusCodes._
 
 
@@ -31,8 +33,6 @@ import StatusCodes._
  * Created by libin on 14-11-12.
  */
 trait CommonRoute {
-
-
 
   def commonRoute(implicit context: ActorContext, mapper: ObjectMapper, executor: ExecutionContext) = {
     val facade=Bean[ServiceFacade]
@@ -98,7 +98,6 @@ trait CommonRoute {
           formFields('username, 'password, 'mobile, 'code, 'email.?) { (username, password, mobile,code, email) =>
             complete {
               val compositeService=facade.getCompositeService
-              val userService=facade.getUserService
                 var customer = compositeService.register(username, password, email.getOrElse(null), mobile,code)
                 if(null!=customer){
                   val d = new util.HashMap[String,Object]()
@@ -160,6 +159,53 @@ trait CommonRoute {
         complete{
           val repo = Bean[AdvertisementRepository]
           repo.findByActive(true,Advertisement.getDefaultPageable(0))
+        }
+      }
+    } ~
+    path("wechat"/"cb"){
+      get{
+        parameters('code,'fw.?,'state){
+          (code,fw,state)=>
+              import context.dispatcher
+              implicit val timeout: Timeout = Timeout(15.seconds)
+              implicit val system=context.system
+              val appId="wx7a337cc5bea4214a"
+              val appSecret="232dd422a642de424c642c8e379ad935"
+              val url=Uri(s"https://api.weixin.qq.com/sns/oauth2/access_token?appid=$appId&secret=$appSecret&code=$code&grant_type=authorization_code")
+              val response: Future[HttpResponse] =
+                (IO(Http) ? HttpRequest(GET, url)).mapTo[HttpResponse]
+              val res= Await.result(response,15.seconds)
+              val result=mapper.readTree(res.entity.asString)
+              if(!result.has("errcode")) {
+                val access_token = result.get("access_token").asText()
+                //val unionid = result.get("unionid").asText()
+                val openId = result.get("openid").asText()
+                var user = userService.findByUnionId(openId)
+                if (null == user) {
+                  val url = Uri(s"https://api.weixin.qq.com/sns/userinfo?access_token=$access_token&openid=$openId&lang=zh_CN")
+                  val response: Future[HttpResponse] =
+                    (IO(Http) ? HttpRequest(GET, url)).mapTo[HttpResponse]
+                  val res = Await.result(response, 15.seconds)
+                  val result = mapper.readTree(res.entity.asString)
+                  if (!result.has("errcode")) {
+                    val compositeService = facade.getCompositeService
+                    val nickname = result.get("nickname").asText()
+                    val sex = result.get("sex").asText()
+                    val headimgurl = result.get("headimgurl").asText()
+                    val customer=compositeService.register(s"$nickname",openId,nickname,sex,openId,null,null)
+                    user=userService.findById(customer.getId)
+                  }
+                }
+                if (null != user) {
+                  val token = userService.getAvailableToken(user)
+                  setCookie(HttpCookie("ut", content=token,path=Some("/")),HttpCookie("uid", content=user.getId,path=Some("/"))){
+                    redirect(Uri(fw.getOrElse("/")),StatusCodes.TemporaryRedirect)
+                  }
+                }else
+                  complete(Unauthorized,"username or password incorrect")
+              }else
+                complete(Unauthorized,"username or password incorrect")
+
         }
       }
     }

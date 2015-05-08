@@ -31,8 +31,7 @@ public class Customer extends AbstractDocument {
 
 
     private String realname;
-
-
+    private String sex;
     private Contact contact=new Contact();
 
     private Shipping shippingAddress;
@@ -103,6 +102,14 @@ public class Customer extends AbstractDocument {
 
         Assert.notNull(shop);
         favoriteShops.remove(shop);
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     public Contact contact() {

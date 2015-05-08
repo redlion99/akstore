@@ -10,9 +10,9 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  * Created by libin on 14-11-7.
  */
 
-case class Start()
+case object Start
 
-case class Stop()
+case object Stop
 
 case class GetBean(value: Class[_])
 
@@ -22,14 +22,14 @@ class SpringActor extends Actor{
   //protected ApplicationContext context= new AnnotationConfigApplicationContext(ApplicationConfig.class);
   var applicationContext:ApplicationContext = _
   def receive = {
-    case Start() =>
+    case Start =>
       applicationContext = SpringUtil.getInstance().getApplicationContext
       var beanLookup=context.actorOf(
         props = Props(new BeanLookupActor(applicationContext)),
         name = "beanLookup"
       )
       println(beanLookup)
-    case Stop() =>
+    case Stop =>
 
   }
 }

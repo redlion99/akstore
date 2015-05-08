@@ -1,4 +1,4 @@
-package me.smartco.akstore.user.security;
+package me.smartco.akstore.user.spring;
 
 import me.smartco.akstore.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

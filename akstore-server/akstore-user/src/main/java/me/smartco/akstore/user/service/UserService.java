@@ -28,7 +28,7 @@ public class UserService {
     }
 
     public User findByUsernameAndPassword(String username,String password){
-        return userRepository.findByUsernameAndPasswordAndActive(username, MD5Util.MD5(password),true);
+        return userRepository.findByUsernameAndPasswordAndActive(username, MD5Util.MD5(password), true);
     }
 
     public boolean checkPermission(String username,String name,String path){
@@ -84,6 +84,10 @@ public class UserService {
     }
     public String getAvailableToken(User user){
         return getAvailableToken(user,false);
+    }
+
+    public User findByUnionId(String unionId){
+        return userRepository.findByUnionIdAndActive(unionId,true);
     }
 
     public UserRepository getUserRepository() {

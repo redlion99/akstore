@@ -76,6 +76,26 @@ public class CompositeService {
         }
     }
 
+    public Customer register(String username,String password,String displayName,String sex,String unionId,Attachment avatar,String validateCode) throws CodeValidateFailedException {
+        validateCode=userService.getValidateCode(username);
+        User user=userService.register(username, password, "Customer", validateCode);
+        if(null!=user){
+            user.setUnionId(unionId);
+            userService.getUserRepository().save(user);
+            Customer customer =mallService.getCustomerByUserID(user.getId());
+            if(null==customer) {
+                customer = new Customer(user.getId(),displayName);
+                customer.setAvatar(avatar);
+                customer.setSex(sex);
+                mallService.getCustomerRepository().save(customer);
+            }
+            userService.getAvailableToken(user);
+            return customer;
+        }else {
+            return null;
+        }
+    }
+
 
     public User registerStaff(String username, String password, String validateCode) throws CodeValidateFailedException {
         return userService.register(username, password, "Staff", validateCode);

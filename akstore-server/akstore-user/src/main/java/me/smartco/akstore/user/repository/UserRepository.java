@@ -15,5 +15,6 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     User findByUsernameAndTokenAndActive(@Param("username") String username, @Param("token") String token, @Param("active") Boolean active);
     User findByTokenAndActive(@Param("token") String token, @Param("active") Boolean active);
+    User findByUnionIdAndActive(@Param("unionId") String unionId, @Param("active") Boolean active);
 
 }

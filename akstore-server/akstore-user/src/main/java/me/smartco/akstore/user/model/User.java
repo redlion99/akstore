@@ -28,6 +28,8 @@ public class User extends AbstractDocument {
     protected String token;
     protected Date tokenExpired;
 
+    protected String unionId;
+
     @DBRef
     private Set<Role> roles=new HashSet<Role>();
 
@@ -81,6 +83,14 @@ public class User extends AbstractDocument {
             }
         }
         return false;
+    }
+
+    public String unionid(){
+        return unionId;
+    }
+
+    public void setUnionId(String unionId) {
+        this.unionId = unionId;
     }
 
     public String token() {
